@@ -1,17 +1,19 @@
-#include "blink.h"
+#include "Blink.h"
 
-int my_led_pin = 13;
-int milliseconds_on_off = 1000;
 
-Blink my_blink(my_led_pin, milliseconds_on_off);
+Blink first_blink (13, 500);
+//Blink second_blink (12, 1000);
 
 void setup()
 {
-    my_blink.start();
-}
+  Serial.begin(9600);
+  Serial.println("Starting...");
+  first_blink.begin();
+  //second_blink.begin();
+} 
 
 void loop()
 {
-    my_blink.updateTimer();
-    Serial.println(my_blink.getStatus());
+    first_blink.updateTimer();
+    //second_blink.updateTimer();
 }
