@@ -1,11 +1,8 @@
 #include "Arduino.h"
 #include "Blink.h"
 
-Blink *Blink::_instance;
-
 Blink::Blink (int led_pin, int duration) 
 {
-  _blink_timer = new Timer();
   _led_status = 0;
   _led_pin = led_pin;
   _duration = duration;
@@ -16,13 +13,12 @@ Blink::Blink (int led_pin, int duration)
 
 void Blink::begin ()
 {
-  _blink_event = _blink_timer->every(_duration, _callbackGlue);
-  _instance = this;
+  _blink_event = _blink_timer.every(_duration, _callbackGlue, this);
 }
   
-void Blink::_callbackGlue()
+void Blink::_callbackGlue(void *context)
 {
-  _instance->_callback();
+  ((Blink *)context)->_callback();
 }
 
 void Blink::_callback()
@@ -38,5 +34,5 @@ void Blink::_callback()
 
 void Blink::updateTimer()
 {
-    _blink_timer->update();
+    _blink_timer.update();
 }

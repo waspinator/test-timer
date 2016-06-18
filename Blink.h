@@ -6,7 +6,7 @@
 #define Blink_h
 
 #include "Arduino.h"
-#include <Timer.h> // https://github.com/JChristensen/Timer/master
+#include <Timer.h> // https://github.com/JChristensen/Timer/tree/v2.1
     // Timer.h uses millis() instead of built in timers 
 
 class Blink
@@ -17,11 +17,10 @@ public:
   void updateTimer();
    
 private:
-  static void _callbackGlue();
+  static void _callbackGlue(void *context);
   void _callback();
 
-  static Blink *_instance;
-  Timer *_blink_timer;
+  Timer _blink_timer;
   int _led_pin;
   int _duration;
   int _led_status;
